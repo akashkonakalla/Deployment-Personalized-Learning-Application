@@ -5,7 +5,7 @@
 
 const API = (() => {
 
-  const BASE_URL = window.API_BASE_URL || 'http://localhost:8000';
+  const BASE_URL = window.API_BASE_URL || 'https://deployment-personalized-learning.onrender.com';
 
   /**
    * Core fetch wrapper with auth header injection and error handling
