@@ -31,16 +31,22 @@ app = FastAPI(
 )
 
 # ── CORS ──
+origins = [
+    "https://personalized-learning-application.vercel.app",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ── Routers ──
-app.include_router(auth_router,     prefix="/auth",     tags=["Authentication"])
+app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(learning_router, prefix="/learning", tags=["Learning"])
 
 
