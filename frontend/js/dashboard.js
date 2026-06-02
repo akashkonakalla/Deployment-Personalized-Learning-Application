@@ -47,6 +47,15 @@ const Dashboard = (() => {
     }
 
     populateUserInfo();
+
+    // Show welcome toast on fresh login
+    if (sessionStorage.getItem('just_logged_in')) {
+      sessionStorage.removeItem('just_logged_in');
+      const user = Auth.getUser();
+      const name = user?.name ? user.name.split(' ')[0] : 'back';
+      setTimeout(() => Utils.toast(`Welcome back, ${name}! 🎉`, 'success'), 400);
+    }
+
     bindGlobalEvents();
     navigateTo('topic');
     loadHistory();
@@ -112,7 +121,7 @@ const Dashboard = (() => {
     // Sync journey strip
     const JOURNEY_ORDER = ['topic', 'quiz', 'results', 'content', 'flashcards', 'recommendations', 'agent'];
     const currentIdx = JOURNEY_ORDER.indexOf(step);
-    
+
     // Determine maximum reachable index based on data
     let maxIdx = 0; // topic
     if (state.questions && state.questions.length > 0) maxIdx = 1; // quiz
@@ -123,7 +132,7 @@ const Dashboard = (() => {
       const s = el.dataset.step;
       const idx = JOURNEY_ORDER.indexOf(s);
       el.classList.remove('active', 'completed');
-      
+
       if (s === step) {
         el.classList.add('active');
       } else if (idx <= maxIdx) {
@@ -142,7 +151,7 @@ const Dashboard = (() => {
     document.querySelectorAll('.progress-dot[data-dot]').forEach(dot => {
       const n = parseInt(dot.dataset.dot);
       dot.classList.remove('done', 'current');
-      
+
       if (n === currentDot) {
         dot.classList.add('current');
       } else if (n <= maxDot) {

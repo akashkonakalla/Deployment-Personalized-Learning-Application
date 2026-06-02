@@ -122,6 +122,7 @@ const Auth = (() => {
         const data = await API.login({ email, password });
         setToken(data.access_token);
         setUser(data.user);
+        sessionStorage.setItem('just_logged_in', '1');
         window.location.href = 'dashboard.html';
       } catch (err) {
         Utils.showAlert('alert-box', err.message || 'Login failed. Please try again.', 'error');

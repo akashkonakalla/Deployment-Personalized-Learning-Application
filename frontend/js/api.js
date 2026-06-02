@@ -37,9 +37,11 @@ const API = (() => {
 
       // Handle 401 Unauthorized — redirect to login
       if (response.status === 401) {
-        Auth?.logout?.();
-        window.location.href = 'login.html';
-        return;
+        if (endpoint !== '/auth/login') {
+          Auth?.logout?.();
+          window.location.href = 'login.html';
+          return;
+        }
       }
 
       const data = await response.json();
